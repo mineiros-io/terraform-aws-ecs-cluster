@@ -26,6 +26,8 @@ provider "aws" {
 module "test" {
   source = "../.."
 
+  name = "test-cluster"
+
   module_enabled = true
 
   # add all required arguments
