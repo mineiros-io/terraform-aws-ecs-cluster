@@ -28,6 +28,8 @@ provider "aws" {
 module "test" {
   source = "../.."
 
+  name = "test-cluster"
+
   # add only required arguments and no optional arguments
 }
 
