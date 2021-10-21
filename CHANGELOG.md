@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Implement initial support for `aws_ecs_cluster` resource
+- Add tests for `aws_ecs_cluster` resource
 
 <!-- markdown-link-check-disable -->
 

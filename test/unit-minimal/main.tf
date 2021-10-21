@@ -16,7 +16,7 @@ terraform {
       source = "hashicorp/aws"
       # always test with exact version to catch unsupported blocks/arguments early
       # this should match the minimal version in versions.tf
-      version = "3.0.0"
+      version = "3.57.0"
     }
   }
 }
@@ -25,15 +25,22 @@ provider "aws" {
   region = var.aws_region
 }
 
+resource "random_string" "cluster_suffix" {
+  length  = 4
+  special = false
+  upper   = false
+}
+
 module "test" {
   source = "../.."
 
-  name = "test-cluster"
+  name = "ecs-test-cluster-${random_string.cluster_suffix.result}"
 
   # add only required arguments and no optional arguments
 }
 
-output "all" {
-  description = "All outputs of the module."
-  value       = module.test
-}
+# outputs generate non-idempotent terraform plans so we disable them for now unless we need them.
+# output "all" {
+#   description = "All outputs of the module."
+#   value       = module.test
+# }
