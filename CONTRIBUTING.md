@@ -80,7 +80,7 @@ If everything looks good, they will merge the code and release a new version whi
 <!-- markdown-link-check-disable -->
 
 [pull requests]: https://github.com/mineiros-io/terraform-aws-ecs-cluster/pulls
-[pre-commit-file]: https://github.com/mineiros-io/terraform-aws-ecs-cluster/blob/master/.pre-commit-config.yaml
+[pre-commit-file]: https://github.com/mineiros-io/terraform-aws-ecs-cluster/blob/main/.pre-commit-config.yaml
 
 <!-- markdown-link-check-enable -->
 
