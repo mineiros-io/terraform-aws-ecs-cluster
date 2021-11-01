@@ -18,8 +18,8 @@ variable "name" {
 # These variables have defaults, but may be overridden.
 # ----------------------------------------------------------------------------------------------------------------------
 
-variable "cluster_tags" {
-  description = "(Optional) A map of tags to apply to all the created 'aws_ecs_cluster' resource. Default is {}."
+variable "tags" {
+  description = "(Optional) A map of tags to apply to all created resources."
   type        = map(string)
   default     = {}
 }
@@ -30,26 +30,52 @@ variable "enable_container_insights" {
   default     = true
 }
 
+variable "configuration" {
+  description = "KMS ID for the execute command logging configuration"
+  type        = any
+  # type = object({
+  #   execute_command_configuration = optional(object({
+  #     # (Optional) The AWS Key Management Service key ID to encrypt the data between the local client and the container.
+  #     kms_key_id = optional(string)
+  #     # (Optional) The log configuration for the results of the execute command actions Required when `logging` is `OVERRIDE`.
+  #     log_configuration = optional(object({
+  #       # (Optional) Whether or not to enable encryption on the CloudWatch logs. If not specified, encryption will be disabled.
+  #       cloud_watch_encryption_enabled = optional(bool)
+  #       # (Optional) The name of the CloudWatch log group to send logs to.
+  #       cloud_watch_log_group_name = optional(string)
+  #       # (Optional) The name of the S3 bucket to send logs to.
+  #       s3_bucket_name = optional(string)
+  #       # (Optional) Whether or not to enable encryption on the logs sent to S3. If not specified, encryption will be disabled.
+  #       s3_bucket_encryption_enabled = optional(bool)
+  #       # (Optional) An optional folder in the S3 bucket to place logs in.
+  #       s3_key_prefix = optional(string)
+  #     }))
+  #   }))
+  #   # (Optional) The log setting to use for redirecting logs for your execute command results. Valid values are `NONE`, `DEFAULT`, and `OVERRIDE`.
+  #   logging = optional(string)
+  # })
+  default = null
+}
+
 # ----------------------------------------------------------------------------------------------------------------------
 # MODULE CONFIGURATION PARAMETERS
 # These variables are used to configure the module.
-# See https://medium.com/mineiros/the-ultimate-guide-on-how-to-write-terraform-modules-part-1-81f86d31f024
 # ----------------------------------------------------------------------------------------------------------------------
 
 variable "module_enabled" {
   type        = bool
-  description = "(Optional) Whether to create resources within the module or not. Default is true."
+  description = "(Optional) Whether to create resources within the module or not."
   default     = true
+}
+
+variable "module_tags" {
+  type        = map(string)
+  description = "(Optional) A map of tags that will be applied to all created resources that accept tags. Tags defined with 'module_tags' can be overwritten by resource-specific tags."
+  default     = {}
 }
 
 variable "module_depends_on" {
   type        = any
-  description = "(Optional) A list of external resources the module depends_on. Default is []."
+  description = "(Optional) A list of external resources the module depends_on."
   default     = []
-}
-
-variable "module_tags" {
-  description = "(Optional) A map of default tags to apply to all resources created which support tags. Default is {}."
-  type        = map(string)
-  default     = {}
 }
