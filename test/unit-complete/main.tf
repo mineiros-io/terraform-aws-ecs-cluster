@@ -23,16 +23,40 @@ provider "aws" {
   region = var.aws_region
 }
 
+resource "random_string" "cluster_suffix" {
+  length  = 4
+  special = false
+  upper   = false
+}
+
+resource "aws_cloudwatch_log_group" "log_group" {
+  name = "ecs-cluster-test-log-group-${random_string.cluster_suffix.result}"
+}
+
 module "test" {
   source = "../.."
-
-  name = "test-cluster"
 
   module_enabled = true
 
   # add all required arguments
+  name = "ecs-test-cluster-${random_string.cluster_suffix.result}"
 
   # add most/all optional arguments
+  configuration = {
+    execute_command_configuration = {
+      # kms_key_id = ""
+      logging = "OVERRIDE"
+
+      log_configuration = {
+        cloud_watch_encryption_enabled = false
+        cloud_watch_log_group_name     = aws_cloudwatch_log_group.log_group.name
+      }
+    }
+  }
+
+  tags = {
+    Department = "Engineering"
+  }
 
   module_tags = {
     Environment = "unknown"
@@ -41,7 +65,8 @@ module "test" {
   module_depends_on = ["nothing"]
 }
 
-output "all" {
-  description = "All outputs of the module."
-  value       = module.test
-}
+# outputs generate non-idempotent terraform plans so we disable them for now unless we need them.
+# output "all" {
+#   description = "All outputs of the module."
+#   value       = module.test
+# }
