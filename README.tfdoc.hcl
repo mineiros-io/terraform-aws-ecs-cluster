@@ -37,7 +37,7 @@ section {
   title   = "terraform-aws-ecs-cluster"
   toc     = true
   content = <<-END
-    A [Terraform] module to create and manage
+    A [Terraform] module to create and manage an
     [Amazon ECS Cluster](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/clusters.html)
     on [Amazon Web Services (AWS)][aws].
 
